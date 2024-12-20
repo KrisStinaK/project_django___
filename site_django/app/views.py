@@ -29,13 +29,13 @@ def addproject(request):
                 return redirect('home')
             except:
                 form.add_error(None, 'Ошибка добавления проекта')
-    else:
-        form = AddForm()
-    data = {
-        'menu': menu,
-        'title': 'Добавление проекта',
-        'form': form
-    }
+        else:
+            form = AddForm()
+        data = {
+            'menu': menu,
+            'title': 'Добавление проекта',
+            'form': form
+        }
     return render(request, 'app/addpage.html', data)
 
 

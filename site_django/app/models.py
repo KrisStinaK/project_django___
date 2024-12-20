@@ -1,6 +1,7 @@
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db import models
 from django.template.defaultfilters import slugify
+from uuslug import uuslug
 from django.urls import reverse
 
 
@@ -42,9 +43,13 @@ class Game(models.Model):
     def get_absolute_url(self):
         return reverse('posts', kwargs={'post_slug': self.slug})
 
+    # def save(self, *args, **kwargs):
+    #     self.slug = slugify(self.title)
+    #     super().save(*args, **kwargs)
+
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+        self.slug = uuslug(self.title, instance=self)
+        super(Game, self).save(*args, **kwargs)
 
 
 class Category(models.Model):
